@@ -29,8 +29,9 @@ The product of these numbers is 26 x 63 x 78 x 14 = 1788696.
 
 What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the 20 x 20 grid?
 
+Ans: 70600674
+
 '''
-import os
 
 def read_file(filename):
     with open(filename, 'r') as file:
@@ -39,56 +40,85 @@ def read_file(filename):
     return grid
 
 def product(l):
-    print(f"Checking the following numbers: {l}")
     total = 1
     for digit in l:
         total = total * digit
     print(f"{l} product = {total}")
+    
     return total
 
 def check_horizontal(line):
     current_highest = 0
-    for num in range(len(line) - goal + 1):
-        prod = product(line[num : num + goal])
+    for i in range(len(line) - goal + 1):
+        horz = product(line[i : i + goal])
+        if horz > current_highest:
+            current_highest = horz
+    
+    return current_highest
+
+def check_vertical(pos, grid):
+    current_highest = 0
+    col = pos[1]
+    for i in range(len(grid) - goal + 1):
+        vert = [grid[i + j][col] for j in range(goal)]
+        prod = product(vert)
         if prod > current_highest:
             current_highest = prod
     
     return current_highest
 
-def check_vertical(x, pos, grid):
-    pass
 
-def check_left_up_diag(x, pos, grid):
-    pass
+def check_left_diag(pos, grid):
+    current_highest = 0
+    row, col = pos
+    if row <= len(grid) - goal and col <= len(grid[0]) - goal:
+        diag = [grid[row + i][col + i] for i in range(goal)]
+        prod = product(diag)
+        if prod > current_highest:
+            current_highest = prod
+    
+    return current_highest
 
-def check_left_down_diag(x, pos, grid):
-    pass
-
-def check_right_up_diag(x, pos, grid):
-    pass
-
-def check_right_down_diag(x, pos, grid):
-    pass
+def check_right_diag(pos, grid):
+    current_highest = 0
+    row, col = pos
+    if row <= len(grid) - goal and col <= len(grid[0]) - goal:
+        diag = [grid[row - i][col + i] for i in range(goal)]
+        prod = product(diag)
+        if prod > current_highest:
+            current_highest = prod
+    
+    return current_highest
 
 def main():
-    print(input)
-
     highest_product  = 0
-    row = 0
-    col = 0
     pos = (0,0)
 
     for row, line in enumerate(input):
-        print(f"Checking line:\n{line}\n__________")
-
         current_highest = check_horizontal(line)
         if current_highest > highest_product:
             highest_product = current_highest
 
-        print(f"current highest so far: {highest_product}")
+        for col, num in enumerate(line):
+            pos = (row,col)
+
+            current_highest = check_vertical(pos,input)
+            if current_highest > highest_product:
+                highest_product = current_highest
+
+            current_highest = check_left_diag(pos,input)
+            if current_highest > highest_product:
+                highest_product = current_highest
+
+            if row >= 3:
+                current_highest = check_right_diag(pos,input)
+                if current_highest > highest_product:
+                    highest_product = current_highest
+
+    print(f"Greatest Product: {highest_product}")
 
 if __name__ == "__main__":
-    
     input = read_file('input_files/Problem_11_grid.txt')
     goal = 4
+    
     main()
