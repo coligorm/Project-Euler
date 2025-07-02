@@ -116,7 +116,7 @@ def read_file(filename):
 
 def main():
     total = str(sum(input))
-    print(total[:10])
+    print(total[:goal])
 
 if __name__ == "__main__":
     input = read_file('input_files/Problem_13_input.txt')
