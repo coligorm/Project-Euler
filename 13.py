@@ -105,13 +105,18 @@ Work out the first ten digits of the sum of the following one-hundred 50-digit n
 20849603980134001723930671666823555245252804609722
 53503534226472524250874054075591789781264330331690
 
+Ans:5537376230
+
 '''
 
 def read_file(filename):
-    pass
+    with open(filename, 'r') as file:
+        input = [int(num) for num in file.readlines()]
+    return input
 
 def main():
-    print(input)
+    total = str(sum(input))
+    print(total[:10])
 
 if __name__ == "__main__":
     input = read_file('input_files/Problem_13_input.txt')
