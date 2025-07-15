@@ -32,16 +32,19 @@ def main():
     longest = 0
     chain = []
     
-    n = test
-    # for n in range(goal):
-    while n != 1:
-        chain.append(n)
-        n = next_sequence(n)
+    i = test
+    for n in range(test, goal):
+        while n > 1:
+            chain.append(n)
+            n = next_sequence(n)
 
-    curr = len(chain) + 1
-    if curr > longest:
-        longest = curr
-        print(f" Found longer sequence : {chain} with length {curr}")
+        curr = len(chain) + 1
+        if curr > longest:
+            longest = curr
+            print(f" Found longer sequence: {i} - {chain} with length {curr}")
+
+        chain = []
+        i += 1
 
 if __name__ == "__main__":
     test = 13
