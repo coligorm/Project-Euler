@@ -14,6 +14,8 @@ Which starting number, under one million, produces the longest chain?
 
 NOTE: Once the chain starts the terms are allowed to go above one million.
 
+Ans: 837799
+
 '''
 def if_even(n):
     return n // 2
@@ -31,6 +33,7 @@ def next_sequence(n):
 def main():
     longest = 0
     chain = []
+    ans = 0
     
     i = test
     for n in range(test, goal):
@@ -41,10 +44,13 @@ def main():
         curr = len(chain) + 1
         if curr > longest:
             longest = curr
-            print(f" Found longer sequence: {i} - {chain} with length {curr}")
+            print(f"Found longer sequence: {i} with length {curr}")
+            ans = i
 
         chain = []
         i += 1
+
+    print(f"/nThe starting number {ans} produces the longest chain, under one million")
 
 if __name__ == "__main__":
     test = 13
