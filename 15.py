@@ -13,6 +13,8 @@ _ _  _    _
 
 
 How many such routes are there through a 20 x 20 grid?
+
+Ans: 137846528820
 '''
 
 # The odd numbered rows of pascals triangle gives the answers
@@ -29,15 +31,18 @@ def pascal(n):
     for i in range(n):
         row = []
         for j in range(i+1):
-            
-
             # nCr = n!/((n-r)!*r!)
             row.append((factorial(i) // (factorial(j) * factorial(i-j))))
             
-        print(row)
+    return row
+
+def find_routes(l):
+    pos = len(l) // 2
+    return l[pos]
 
 def main():
-    pascal(5)
+    pascal_size = input + input + 1
+    print(find_routes(pascal(pascal_size)))
 
 if __name__ == "__main__":
     test = 2
