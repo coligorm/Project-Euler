@@ -34,38 +34,57 @@ Find the maximum total from top to bottom of the triangle below:
 # Source: https://www.codecademy.com/learn/learn-data-structures-and-algorithms-with-python/modules/trees/cheatsheet
 
 class TreeNode:
-  def __init__(self, value):
-    self.value = value # data
-    self.children = [] # references to other nodes
-
-  def add_child(self, child_node):
-    # creates parent-child relationship
-    print("Adding " + child_node.value)
-    self.children.append(child_node) 
+    def __init__(self, value):
+        self.value = value # data
+        self.children = [] # references to other nodes
     
-  def remove_child(self, child_node):
-    # removes parent-child relationship
-    print("Removing " + child_node.value + " from " + self.value)
-    self.children = [child for child in self.children 
-                     if child is not child_node]
+    def __str__(self, level=0):
+        ret = "\t"*level+repr(self.value)+"\n"
+        for child in self.children:
+            ret += child.__str__(level+1)
+        return ret
 
-  def traverse(self):
-    # moves through each node referenced from self downwards
-    nodes_to_visit = [self]
-    while len(nodes_to_visit) > 0:
-      current_node = nodes_to_visit.pop()
-      print(current_node.value)
-      nodes_to_visit += current_node.children
+    def __repr__(self):
+        return '<tree node representation>'
+
+    def add_child(self, child_node):
+        # creates parent-child relationship
+        self.children.append(child_node) 
+
+    def traverse(self):
+        # moves through each node referenced from self downwards
+        nodes_to_visit = [self]
+        while len(nodes_to_visit) > 0:
+            current_node = nodes_to_visit.pop()
+            print(current_node.value)
+            nodes_to_visit += current_node.children
 
 
 def read_file(filename):
+    list_of_lists = []
     with open(filename, 'r') as file:
-        input = [int(num) for num in file.readlines()]
-    return input
+        for line in file:
+            row = [int(num) for num in line.strip().split()]
+            list_of_lists.append(row)
+    return list_of_lists
+
+def build_tree(l):
+    # Create TreeNode objects for each value
+    nodes = [[TreeNode(str(value)) for value in row] for row in l]
+    # Link children
+    for i in range(len(nodes) - 1):
+        for j in range(len(nodes[i])):
+            nodes[i][j].add_child(nodes[i+1][j])
+            nodes[i][j].add_child(nodes[i+1][j+1])
+    return nodes[0][0]  # Return the root node
 
 def main():
-    print(test)
+    root = build_tree(test)
+    root.traverse()
+    str(root)
+    print(root)
 
+    
 if __name__ == "__main__":
     test = read_file('input_files/18-test.txt')
     input = read_file('input_files/18-input.txt')
