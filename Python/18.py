@@ -37,28 +37,21 @@ class TreeNode:
     def __init__(self, value):
         self.value = value # data
         self.children = [] # references to other nodes
-    
-    def __str__(self, level=0):
-        ret = "\t"*level+repr(self.value)+"\n"
-        for child in self.children:
-            ret += child.__str__(level+1)
-        return ret
-
-    def __repr__(self):
-        return '<tree node representation>'
 
     def add_child(self, child_node):
         # creates parent-child relationship
         self.children.append(child_node) 
 
-    def traverse(self):
-        # moves through each node referenced from self downwards
-        nodes_to_visit = [self]
-        while len(nodes_to_visit) > 0:
-            current_node = nodes_to_visit.pop()
-            print(current_node.value)
-            nodes_to_visit += current_node.children
-
+    def get_all_routes(self, path=None):
+        if path is None:
+            path = []
+        path = path + [int(self.value)]
+        if not self.children:
+            return [path]
+        routes = []
+        for child in self.children:
+            routes.extend(child.get_all_routes(path))
+        return routes
 
 def read_file(filename):
     list_of_lists = []
@@ -78,11 +71,18 @@ def build_tree(l):
             nodes[i][j].add_child(nodes[i+1][j+1])
     return nodes[0][0]  # Return the root node
 
+def find_max(l):
+    current_max = 0
+    for route in l:
+        total = sum(route)
+        if total > current_max:
+            current_max = total
+    return current_max
+        
 def main():
-    root = build_tree(test)
-    root.traverse()
-    str(root)
-    print(root)
+    root = build_tree(input)
+    routes = root.get_all_routes()
+    print(find_max(routes))
 
     
 if __name__ == "__main__":
