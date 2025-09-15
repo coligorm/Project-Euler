@@ -9,9 +9,19 @@ and the sum of the digits in the number 10! is 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.
 
 Find the sum of the digits in the number 100!
 '''
-
-def main():
+def factorial():
     pass
 
-if __name__ == "__main__":  
+def num_to_list(l):
+    pass
+
+
+def main():
+    fact = factorial(test)
+    
+
+if __name__ == "__main__":
+    test = 10
+    input = 100
+    
     main()
