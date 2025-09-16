@@ -25,7 +25,7 @@ def main():
     total = 0
     names = {}
     for i, name in enumerate(input, start=1):
-        names[name] = i + alphabetical_value(name)
+        names[name] = i * alphabetical_value(name)
         total += names[name]
 
     print(total)
