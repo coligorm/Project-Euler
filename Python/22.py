@@ -11,6 +11,7 @@ So, COLIN would obtain a score of 938 x 53 = 49714.
 
 What is the total of all the name scores in the file?
 
+Ans: 871198282
 '''
 def read_file(filename):
     data = []
