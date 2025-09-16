@@ -13,17 +13,17 @@ What is the total of all the name scores in the file?
 
 '''
 def read_file(filename):
-    list_of_lists = []
+    data = []
     with open(filename, 'r') as file:
-        for line in file:
-            row = [int(num) for num in line.strip().split()]
-            list_of_lists.append(row)
-    return list_of_lists
+        return file.read().replace('"', '').split(',')
+            
+    return data
 
 def main():
-    pass
+    print(test)
 
 if __name__ == "__main__":
-    input = read_file('input_files/18-input.txt')
+    test = read_file('input_files/22-test.txt')
+    # input = read_file('input_files/22-input.txt')
     
     main()
