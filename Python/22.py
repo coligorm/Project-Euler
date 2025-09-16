@@ -15,15 +15,23 @@ What is the total of all the name scores in the file?
 def read_file(filename):
     data = []
     with open(filename, 'r') as file:
-        return file.read().replace('"', '').split(',')
-            
-    return data
+        return sorted(file.read().replace('"', '').split(','))
+
+def alphabetical_value(word):
+    val = [ord(char) - 96 for char in word.lower()]
+    return sum(val)
 
 def main():
-    print(test)
+    total = 0
+    names = {}
+    for i, name in enumerate(input, start=1):
+        names[name] = i + alphabetical_value(name)
+        total += names[name]
+
+    print(total)
 
 if __name__ == "__main__":
     test = read_file('input_files/22-test.txt')
-    # input = read_file('input_files/22-input.txt')
-    
+    input = read_file('input_files/22-input.txt')
+
     main()
