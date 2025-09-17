@@ -31,7 +31,7 @@ def main():
     abundant_numbers = set([x for x in range(1, input + 1) if is_abundant(x, proper_numbers(x))])
     
     total = 0
-    for i in range(1, input + 1):
+    for i in range(1, test + 1):
         pn_i = proper_numbers(i)
         abundant_divisors = list(set(pn_i) & set(abundant_numbers))
         print(f'{i} : PN: {pn_i} : AD: {abundant_divisors}')
@@ -40,10 +40,10 @@ def main():
             for j in abundant_divisors:
                 if i - j not in abundant_numbers:
                     total += i
-                    print(f'{i} has Abundent Divsor {j}, however, cannot sum two abundent numbers. Total: {total}')
-                    break
+                    print(f'{i} has an Abundent Divsor {j}, however, {i-j} is not, therefore, total: {total}')
                 else:
-                    print(f'Invalid : {i} - {j} = {i-j}, which is Abundant')
+                    print(f'Invalid : {i} - {j} = {i-j}, which is Abundant. Next iteration...')
+                    break
         else:
             total += i
             print(f'{i} Total: {total}')
