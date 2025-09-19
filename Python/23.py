@@ -12,6 +12,8 @@ By mathematical analysis, it can be shown that all integers greater than 28123 c
 However, this upper limit cannot be reduced any further by analysis even though it is known that the greatest number that cannot be expressed as the sum of two abundant numbers is less than this limit.
 
 Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
+
+Ans: 4179871
 '''
 from itertools import product  
 
