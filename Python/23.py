@@ -13,6 +13,7 @@ However, this upper limit cannot be reduced any further by analysis even though 
 
 Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
 '''
+from itertools import product  
 
 def proper_numbers(n):
     pn = set([1])
@@ -23,35 +24,24 @@ def proper_numbers(n):
                 pn.add(n // i)
     return sorted(pn)
 
-def is_abundant(num, pn):
-    return num < sum(pn)
+def is_abundant(num):
+    return num < sum(proper_numbers(num))
 
 def main():
-    # Converted to set for efficiency 
-    abundant_numbers = set([x for x in range(1, input + 1) if is_abundant(x, proper_numbers(x))])
-    
-    total = 0
-    for i in range(1, test + 1):
-        pn_i = proper_numbers(i)
-        abundant_divisors = list(set(pn_i) & set(abundant_numbers))
-        print(f'{i} : PN: {pn_i} : AD: {abundant_divisors}')
-        
-        if len(abundant_divisors) != 0:
-            for j in abundant_divisors:
-                if i - j not in abundant_numbers:
-                    total += i
-                    print(f'{i} has an Abundent Divsor {j}, however, {i-j} is not, therefore, total: {total}')
-                else:
-                    print(f'Invalid : {i} - {j} = {i-j}, which is Abundant. Next iteration...')
-                    break
-        else:
-            total += i
-            print(f'{i} Total: {total}')
-    
-    print(f'Final total: {total}')
+    # Get all abundent numbers and convert to set for effeciency
+    abundant_numbers = set([x for x in range(1, input + 1) if is_abundant(x)])
+    # Get every combination pair of abundant numbers e.g. (12, 12), (12, 18), (12, 20), (12, 24) ...
+    abundant_pairs = set(product(abundant_numbers, repeat=2))
+    # Sum each pair and save to set
+    abundant_sums = set(map(sum, abundant_pairs))
 
-# First 15 Adundant Numbers for reference
-# 12, 18, 20, 24, 30, 36, 40, 42, 48, 54, 56, 60, 66, 70, 72
+    # Iterate through all positive numbers to 28123, and if they aren't the sum of two abundant numbers then add to total
+    total = 0
+    for i in range(1, input + 1):
+        if i not in abundant_sums:
+            total += i
+    print(total)
+
 if __name__ == '__main__':
     test = 100
     input = 28123
