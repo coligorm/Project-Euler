@@ -16,9 +16,32 @@ Where 0.1(6) means 0.166666..., and has a 1-digit recurring cycle. It can be see
 Find the value of d < 1000 for which 1/d contains the longest recurring cycle in its decimal fraction part.
 
 '''
+from decimal import Decimal, getcontext
 
 def main():
-    pass
+    # Set Decimal to 1000 decimal places
+    getcontext().prec = input
+    
+    d = 0
+    
+    # longest = 0
+    # while longest < input:
+    #     i = 2
+    #     # Some code
+    #     longest = len(recur)
+    #     d = recur
+        
+    i = 2
+    while i < test + 1:
+        
+        recur = []
+        
+        fraction = str(Decimal(1) / Decimal(i))[2:]
+        print(fraction)
+        digits = [int(x) for x in fraction]
+        print(digits)
+        
+        i += 1
 
 if __name__ == '__main__':
     test = 10
