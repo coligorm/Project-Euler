@@ -18,6 +18,17 @@ Find the value of d < 1000 for which 1/d contains the longest recurring cycle in
 '''
 from decimal import Decimal, getcontext
 
+def guess_seq_len(seq):
+    guess = 1
+    max_len = len(seq) // 2
+    for x in range(2, max_len):
+        if seq[0:x] == seq[x:2*x]:
+            return x
+        elif seq[2:x] == seq[x:2*x]:
+            return x
+
+    return guess
+
 def main():
     # Set Decimal to 1000 decimal places
     getcontext().prec = input
@@ -36,10 +47,25 @@ def main():
         
         recur = []
         
-        fraction = str(Decimal(1) / Decimal(i))[2:]
-        print(fraction)
-        digits = [int(x) for x in fraction]
-        print(digits)
+        fraction = str(Decimal(1) / Decimal(i))
+        # print(fraction)
+        fractional = fraction[2:]
+        # print("\nFRACTIONAL:")
+        # print(fractional)
+        digits = [int(x) for x in fractional]
+        # print(digits)
+        seq = guess_seq_len(digits)
+        digits = ''.join(map(str, digits))
+        # print(seq)
+        if seq == 1:
+            # digits = int(''.join(map(str, digits)))
+            # print(digits)
+            print(f'1/{i} = {fraction}')
+        elif seq == 2:
+            # print(digits[0:seq])
+            print(f'1/{i} = 0.({digits[0]})')
+        else:
+            print(f'1/{i} = 0.({digits[0:seq]})')
         
         i += 1
 
