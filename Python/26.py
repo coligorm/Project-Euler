@@ -19,14 +19,19 @@ Find the value of d < 1000 for which 1/d contains the longest recurring cycle in
 from decimal import Decimal, getcontext
 
 def guess_seq_len(seq):
-    guess = 1
+    guess = 0
     max_len = len(seq) // 2
-    for x in range(2, max_len):
+    for x in range(2, max_len + 1):
         if seq[0:x] == seq[x:2*x]:
             return x
         elif seq[2:x] == seq[x:2*x]:
             return x
 
+        # Remove first digit and see if any repeats
+        if x > max_len // 2:
+            if seq[1:x+1] == seq[x:2*x]:
+                return -1
+            
     return guess
 
 def main():
@@ -41,10 +46,8 @@ def main():
     #     # Some code
     #     longest = len(recur)
     #     d = recur
-        
-    i = 2
-    while i < test + 1:
-        
+    
+    for i in range(6, test + 1):
         recur = []
         
         fraction = str(Decimal(1) / Decimal(i))
@@ -52,22 +55,24 @@ def main():
         fractional = fraction[2:]
         # print("\nFRACTIONAL:")
         # print(fractional)
-        digits = [int(x) for x in fractional]
-        # print(digits)
+        digits = [x for x in fractional]
         seq = guess_seq_len(digits)
-        digits = ''.join(map(str, digits))
+        # digits = ''.join(map(str, digits))
+        print(digits[:seq])
+        
         # print(seq)
-        if seq == 1:
+        if not seq:
             # digits = int(''.join(map(str, digits)))
             # print(digits)
             print(f'1/{i} = {fraction}')
         elif seq == 2:
             # print(digits[0:seq])
             print(f'1/{i} = 0.({digits[0]})')
+        elif seq == -1:
+            print(f'1/{i} = 0.{digits[0]}({digits[2]})')
         else:
             print(f'1/{i} = 0.({digits[0:seq]})')
-        
-        i += 1
+
 
 if __name__ == '__main__':
     test = 10
