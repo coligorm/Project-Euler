@@ -34,10 +34,43 @@ def guess_seq_len(seq):
             
     return guess
 
+def find_recur(l):
+    recur = []
+    seq = guess_seq_len(l)
+    if not seq:
+        print("No repeats")
+    elif seq == -1:
+        recur.append(l[2:10])
+    elif seq == 2:
+        recur.append(l[0])
+    
+    return recur
+    
+    # # print(seq)
+    # if not seq:
+    #     # digits = int(''.join(map(str, digits)))
+    #     # print(digits)
+    #     print(f'1/{i} = {fraction}')
+    # elif seq == 2:
+    #     # print(digits[0:seq])
+    #     print(f'1/{i} = 0.({digits[0]})')
+    # elif seq == -1:
+    #     print(f'1/{i} = 0.{digits[0]}({digits[2]})')
+    # else:
+    #     print(f'1/{i} = 0.({digits[0:seq]})')
+
 def main():
     # Set Decimal to 1000 decimal places
     getcontext().prec = input
     
+    for i in range(1, test + 1):
+        fraction = str(Decimal(1) / Decimal(i))
+        # print(fraction)
+        fractional = fraction[2:]
+        # print("\nFRACTIONAL:")
+        # print(fractional)
+        digits = [x for x in fractional]
+        print(find_recur(digits))
     d = 0
     
     # longest = 0
@@ -46,33 +79,6 @@ def main():
     #     # Some code
     #     longest = len(recur)
     #     d = recur
-    
-    for i in range(6, test + 1):
-        recur = []
-        
-        fraction = str(Decimal(1) / Decimal(i))
-        # print(fraction)
-        fractional = fraction[2:]
-        # print("\nFRACTIONAL:")
-        # print(fractional)
-        digits = [x for x in fractional]
-        seq = guess_seq_len(digits)
-        # digits = ''.join(map(str, digits))
-        print(digits[:seq])
-        
-        # print(seq)
-        if not seq:
-            # digits = int(''.join(map(str, digits)))
-            # print(digits)
-            print(f'1/{i} = {fraction}')
-        elif seq == 2:
-            # print(digits[0:seq])
-            print(f'1/{i} = 0.({digits[0]})')
-        elif seq == -1:
-            print(f'1/{i} = 0.{digits[0]}({digits[2]})')
-        else:
-            print(f'1/{i} = 0.({digits[0:seq]})')
-
 
 if __name__ == '__main__':
     test = 10
