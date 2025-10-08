@@ -18,31 +18,51 @@ Find the value of d < 1000 for which 1/d contains the longest recurring cycle in
 '''
 from decimal import Decimal, getcontext
 
-def guess_seq_len(seq):
-    guess = 0
+def find_seq_len(seq):
+    seq_len = 0
     max_len = len(seq) // 2
-    for x in range(2, max_len + 1):
-        if seq[0:x] == seq[x:2*x]:
-            return x
-        elif seq[2:x] == seq[x:2*x]:
-            return x
+    
+    if len(seq) > 1:
+        for x in range(2, input):
+            if seq[0:x] == seq[x:2*x]:
+                seq_len = x
+            elif seq[2:x] == seq[x:2*x]:
+                seq_len = x
 
-        # Remove first digit and see if any repeats
-        if x > max_len // 2:
-            if seq[1:x+1] == seq[x:2*x]:
-                return -1
+            # Remove first digit from list and see if any repeats
+            if x == max_len:
+                seq = seq[1:]
+                max_len - 1
+                
+                for y in range(2, max_len + 1):
+                    if seq[0:y] == seq[y:2*y]:
+                        seq_len = y
+                    elif seq[2:y] == seq[y:2*y]:
+                        seq_len = y
+                    
+                    # If the repeat happens after the first digit, flag with -1
+                    if y > max_len // 2:
+                        if seq[1:y+1] == seq[y:2*y]:
+                            return -1
             
-    return guess
+    return seq_len
 
 def find_recur(l):
     recur = []
-    seq = guess_seq_len(l)
-    if not seq:
+    seq_len = find_seq_len(l)
+    max_len = seq_len // 2
+    
+    if not seq_len:
         print("No repeats")
-    elif seq == -1:
-        recur.append(l[2:10])
-    elif seq == 2:
-        recur.append(l[0])
+    elif seq_len == -1:
+        if len(set(l[1:max_len])) == 1: # All elements are the same
+            print('same')
+            recur.append(l[2])
+        else:
+            recur.append(list(set(l)))
+            print('not same')
+    else:
+        recur.append(l[0:seq_len])
     
     return recur
     
@@ -63,13 +83,14 @@ def main():
     # Set Decimal to 1000 decimal places
     getcontext().prec = input
     
-    for i in range(1, test + 1):
+    for i in range(2, test + 1):
         fraction = str(Decimal(1) / Decimal(i))
         # print(fraction)
         fractional = fraction[2:]
         # print("\nFRACTIONAL:")
         # print(fractional)
         digits = [x for x in fractional]
+        print(digits)
         print(find_recur(digits))
     d = 0
     
